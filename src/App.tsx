@@ -1,5 +1,6 @@
 import { Grid, GridItem, Show, useMediaQuery } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
+import GameGrid from "./components/GameGrid";
 
 function App() {
   const [isMobile] = useMediaQuery(["(max-width: 768px)"]);
@@ -15,12 +16,10 @@ function App() {
         <NavBar />
       </GridItem>
       <Show when={!isMobile}>
-        <GridItem area="aside" bg="gold">
-          Aside
-        </GridItem>
+        <GridItem area="aside">Aside</GridItem>
       </Show>
-      <GridItem area="main" bg="dodgerblue">
-        Main
+      <GridItem area="main">
+        <GameGrid />
       </GridItem>
     </Grid>
   );
