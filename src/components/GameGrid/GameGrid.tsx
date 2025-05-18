@@ -1,29 +1,26 @@
 import { Text, SimpleGrid } from "@chakra-ui/react";
 import useGames from "../../hooks/useGames";
-import GameCard from "./GameCard";
-import GameCardSkeleton from "./GameCardSkeleton";
+import GameCard from "./GameCard/GameCard";
+import GameCardSkeleton from "./GameCard/GameCardSkeleton";
+import { Genre } from "../../hooks/useGenres";
 
-const GameGrid = () => {
-  const { data: games, error, isLoading } = useGames();
+interface GameGridProps {
+  selectedGenre: Genre | null;
+}
+
+const GameGrid = ({ selectedGenre }: GameGridProps) => {
+  const { data: games, error, isLoading } = useGames(selectedGenre);
   const skeletons = [1, 2, 3, 4, 5, 6];
 
   return (
     <>
       {error && <Text>{error}</Text>}
-      {isLoading && (
-        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={3} padding="10px">
-          {skeletons.map((skeleton) => (
-            <GameCardSkeleton key={skeleton} />
-          ))}
-        </SimpleGrid>
-      )}
-      {!isLoading && (
-        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={10} padding="10px">
-          {games.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
-        </SimpleGrid>
-      )}
+      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={3} padding={3}>
+        {isLoading &&
+          skeletons.map((skeleton) => <GameCardSkeleton key={skeleton} />)}
+        {!isLoading &&
+          games.map((game) => <GameCard key={game.id} game={game} />)}
+      </SimpleGrid>
     </>
   );
 };
