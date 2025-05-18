@@ -12,7 +12,7 @@ import { BsGlobe } from "react-icons/bs";
 import { IconType } from "react-icons/lib";
 import { Icon, HStack } from "@chakra-ui/react";
 
-import { Platform } from "../hooks/useGames";
+import { Platform } from "../../../hooks/usePlatforms";
 
 interface Props {
   platforms: Platform[];
@@ -31,11 +31,20 @@ const PlatformIconList = ({ platforms }: Props) => {
     web: BsGlobe,
   };
 
+  if (platforms.length === 0) return null;
+
   return (
     <HStack marginY={1}>
-      {platforms.map((platform) => (
-        <Icon key={platform.id} as={iconMap[platform.slug]} color="gray.500" />
-      ))}
+      {platforms.map(
+        (platform) =>
+          iconMap[platform.slug] && (
+            <Icon
+              key={platform.id}
+              as={iconMap[platform.slug]}
+              color="gray.500"
+            />
+          )
+      )}
     </HStack>
   );
 };

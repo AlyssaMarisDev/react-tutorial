@@ -4,10 +4,19 @@ import GameGrid from "./components/GameGrid/GameGrid";
 import GenreList from "./components/GenreList/GenreList";
 import { Genre } from "./hooks/useGenres";
 import { useState } from "react";
+import { Platform } from "./hooks/usePlatforms";
+import PlatformSelector from "./components/PlatformSelector/PlatformSelector";
+import SortSelector from "./components/SortSelector";
+
+interface GameQuery {
+  genre: Genre | null;
+  platform: Platform | null;
+  sortOrder: string | null;
+}
 
 function App() {
   const [isMobile] = useMediaQuery(["(max-width: 768px)"]);
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   return (
     <Grid
@@ -26,13 +35,29 @@ function App() {
       <Show when={!isMobile}>
         <GridItem area="aside" paddingX={5}>
           <GenreList
-            selectedGenre={selectedGenre}
-            onSelectGenre={(genre) => setSelectedGenre(genre)}
+            selectedGenre={gameQuery.genre}
+            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
           />
         </GridItem>
       </Show>
       <GridItem area="main">
-        <GameGrid selectedGenre={selectedGenre} />
+        <PlatformSelector
+          selectedPlatform={gameQuery.platform}
+          onSelectPlatform={(platform) =>
+            setGameQuery({ ...gameQuery, platform })
+          }
+        />
+        <SortSelector
+          selectedSortOrder={gameQuery.sortOrder}
+          onSelectSortOrder={(sortOrder) =>
+            setGameQuery({ ...gameQuery, sortOrder })
+          }
+        />
+        <GameGrid
+          selectedGenre={gameQuery.genre}
+          selectedPlatform={gameQuery.platform}
+          selectedSortOrder={gameQuery.sortOrder}
+        />
       </GridItem>
     </Grid>
   );
