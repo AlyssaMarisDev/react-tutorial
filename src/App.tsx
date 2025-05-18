@@ -1,6 +1,6 @@
 import { Grid, GridItem, Show, useMediaQuery } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
-import GameGrid from "./components/GameGrid";
+import GameGrid from "./components/GameGrid/GameGrid";
 
 function App() {
   const [isMobile] = useMediaQuery(["(max-width: 768px)"]);
