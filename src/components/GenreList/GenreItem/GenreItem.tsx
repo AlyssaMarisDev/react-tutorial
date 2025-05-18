@@ -5,10 +5,11 @@ import GenreItemContainer from "./GenreItemContainer";
 
 interface GenreItemProps {
   genre: Genre;
+  isSelected: boolean;
   onClick: (genre: Genre) => void;
 }
 
-const GenreItem = ({ genre, onClick }: GenreItemProps) => {
+const GenreItem = ({ genre, isSelected, onClick }: GenreItemProps) => {
   return (
     <GenreItemContainer>
       <HStack width="100%" onClick={() => onClick(genre)}>
@@ -17,7 +18,11 @@ const GenreItem = ({ genre, onClick }: GenreItemProps) => {
           boxSize="32px"
           borderRadius="8px"
         />
-        <Button variant="ghost" fontSize="md">
+        <Button
+          variant="ghost"
+          fontSize="md"
+          fontWeight={isSelected ? "bold" : "normal"}
+        >
           {genre.name}
         </Button>
       </HStack>

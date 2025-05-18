@@ -21,7 +21,12 @@ const GenreList = ({ selectedGenre, onSelectGenre }: GenreListProps) => {
         skeletons.map((skeleton) => <GenreItemSkeleton key={skeleton} />)}
       {!isLoading &&
         genres.map((genre) => (
-          <GenreItem key={genre.id} genre={genre} onClick={onSelectGenre} />
+          <GenreItem
+            key={genre.id}
+            genre={genre}
+            isSelected={genre.id === selectedGenre?.id}
+            onClick={onSelectGenre}
+          />
         ))}
     </List.Root>
   );
